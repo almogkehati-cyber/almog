@@ -1,17 +1,11 @@
 'use client';
 
-import { useState, useRef, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { colors } from '@/lib/colors';
-import BackgroundOrbs from '@/components/BackgroundOrbs';
 
-function OTPContent() {
+export default function OTPPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const method = searchParams.get('method') || 'email';
-  const destination = searchParams.get('destination') || '';
-  
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -42,33 +36,48 @@ function OTPContent() {
 
   return (
     <div 
-      className="flex flex-col min-h-screen overflow-hidden relative"
-      style={{ backgroundColor: colors.background, color: colors.onSurface }}
+      className="w-full max-w-[430px] mx-auto min-h-screen flex flex-col overflow-hidden relative"
+      style={{ 
+        backgroundColor: '#121222', 
+        color: '#e3e0f8',
+        fontFamily: 'Manrope, sans-serif',
+        minHeight: 'max(884px, 100dvh)'
+      }}
     >
-      <BackgroundOrbs />
+      {/* Background Glow */}
+      <div className="w-48 h-48 rounded-full bg-[#7b2fbe] blur-[100px] absolute -z-10 bottom-0 right-0 translate-x-1/2 translate-y-1/2 opacity-20 pointer-events-none" />
+      <div className="w-48 h-48 rounded-full bg-[#d7baff] blur-[100px] absolute -z-10 top-0 left-0 -translate-x-1/2 -translate-y-1/2 opacity-20 pointer-events-none" />
 
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between px-6 py-4">
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 flex-row-reverse bg-transparent max-w-[430px] mx-auto">
+        <div className="flex items-center gap-2">
+          <span 
+            className="text-[#deb7ff] font-bold text-2xl tracking-tighter"
+            style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
+          >
+            TESFA
+          </span>
+        </div>
         <Link href="/register">
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ color: colors.onSurface }}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
+          <button className="w-10 h-10 flex items-center justify-center rounded-full bg-[#333345] hover:opacity-80 transition-opacity active:scale-90 duration-200">
+            <svg className="w-6 h-6 text-[#deb7ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </button>
         </Link>
-        <h1 className="text-lg font-bold font-headline" style={{ color: colors.onSurface }}>אימות קוד</h1>
-        <div className="w-6" />
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 flex-grow flex flex-col justify-center px-6 pt-20 pb-12 max-w-md mx-auto w-full">
+      <main className="flex-1 flex flex-col justify-center px-6 pt-20 pb-12 w-full">
         <div className="mb-12 text-center">
-          <h2 className="text-3xl font-bold mb-4 font-headline" style={{ color: colors.onSurface }}>
+          <h1 
+            className="font-bold text-3xl mb-4 text-[#e3e0f8] tracking-tight"
+            style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
+          >
             אימות קוד
-          </h2>
-          <p className="text-lg leading-relaxed" style={{ color: colors.onSurfaceVariant }}>
-            הזן את הקוד בן 6 הספרות שנשלח אל
-          </p>
-          <p className="text-lg font-bold mt-2" style={{ color: colors.primary }}>
-            {destination}
+          </h1>
+          <p className="text-[#cfc2d5] text-lg leading-relaxed">
+            הזן את הקוד בן 6 הספרות שנשלח אליך
           </p>
         </div>
 
@@ -85,12 +94,8 @@ function OTPContent() {
                 value={digit}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
-                className="w-full aspect-square text-center text-2xl font-bold rounded-2xl outline-none transition-all"
-                style={{
-                  backgroundColor: colors.surfaceContainer,
-                  color: digit ? colors.primary : colors.onSurfaceVariant,
-                  border: `2px solid ${digit ? colors.primary : 'transparent'}`,
-                }}
+                className="w-full aspect-square text-center text-2xl font-bold bg-[#1e1e2f] rounded-2xl outline-none transition-all focus:ring-2 focus:ring-[#deb7ff] focus:bg-[#29283a]"
+                style={{ color: digit ? '#deb7ff' : '#cfc2d5' }}
                 placeholder="•"
               />
             ))}
@@ -98,18 +103,11 @@ function OTPContent() {
 
           {/* Submit Button */}
           <div className="relative group">
-            <div 
-              className="absolute -inset-0.5 rounded-full blur opacity-30 group-hover:opacity-50 transition duration-1000"
-              style={{
-                background: `linear-gradient(to right, ${colors.primaryContainer}, ${colors.secondaryContainer})`,
-              }}
-            />
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#7b2fbe] to-[#6107ba] rounded-full blur opacity-30 group-hover:opacity-50 transition duration-1000 group-active:duration-200" />
             <button 
-              className="relative w-full py-5 rounded-full font-bold text-lg shadow-xl hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 font-headline"
-              style={{
-                background: `linear-gradient(to right, ${colors.primaryContainer}, ${colors.secondaryContainer})`,
-                color: '#FFFFFF',
-              }}
+              onClick={() => router.push('/security-setup')}
+              className="relative w-full py-5 rounded-full bg-gradient-to-r from-[#7b2fbe] to-[#6107ba] text-white font-bold text-lg shadow-xl hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+              style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
             >
               <span>אמת קוד</span>
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -121,26 +119,36 @@ function OTPContent() {
 
         {/* Resend */}
         <div className="mt-12 text-center">
-          <p className="font-medium" style={{ color: colors.onSurfaceVariant }}>
+          <p className="text-[#cfc2d5] font-medium">
             לא קיבלת קוד?{' '}
-            <button className="font-bold mr-1 transition-colors underline underline-offset-4" style={{ color: colors.primary }}>
+            <button className="text-[#deb7ff] hover:text-[#d7baff] font-bold mr-1 transition-colors underline underline-offset-4 decoration-[#deb7ff]/30">
               שלח שוב
             </button>
           </p>
         </div>
       </main>
-    </div>
-  );
-}
 
-export default function OTPPage() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: colors.background }}>
-        <p style={{ color: colors.onSurface }}>טוען...</p>
+      {/* SMS Notification */}
+      <div className="fixed bottom-10 left-1/2 -translate-x-1/2 w-4/5 max-w-xs pointer-events-none">
+        <div 
+          className="p-4 rounded-2xl border-r-4 border-[#deb7ff] shadow-2xl flex items-center gap-4 animate-pulse"
+          style={{ 
+            background: 'rgba(30, 30, 47, 0.6)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)'
+          }}
+        >
+          <div className="w-10 h-10 rounded-full bg-[#7b2fbe]/20 flex items-center justify-center">
+            <svg className="w-5 h-5 text-[#deb7ff]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/>
+            </svg>
+          </div>
+          <div className="flex-1">
+            <p className="text-xs text-[#cfc2d5] uppercase tracking-wider">SMS נשלח</p>
+            <p className="text-sm font-bold text-[#e3e0f8]">בודק הודעות נכנסות...</p>
+          </div>
+        </div>
       </div>
-    }>
-      <OTPContent />
-    </Suspense>
+    </div>
   );
 }

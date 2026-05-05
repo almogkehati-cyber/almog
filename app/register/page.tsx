@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { colors } from '@/lib/colors';
-import BackgroundOrbs from '@/components/BackgroundOrbs';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -22,38 +20,51 @@ export default function RegisterPage() {
       return;
     }
 
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('currentUser', JSON.stringify({ fullName, email, phone }));
-    }
-    
-    router.push(`/otp?method=email&destination=${encodeURIComponent(email)}`);
+    localStorage.setItem('currentUser', JSON.stringify({ fullName, email, phone }));
+    router.push('/otp');
   };
 
   return (
     <div 
-      className="flex flex-col min-h-screen overflow-hidden relative"
-      style={{ backgroundColor: colors.background, color: colors.onSurface }}
+      className="w-full max-w-[430px] mx-auto min-h-screen flex flex-col overflow-hidden relative"
+      style={{ 
+        backgroundColor: '#121222', 
+        color: '#e3e0f8',
+        fontFamily: 'Manrope, sans-serif',
+        minHeight: 'max(884px, 100dvh)'
+      }}
     >
-      <BackgroundOrbs />
+      {/* Background Glow */}
+      <div className="fixed top-0 right-0 w-96 h-96 bg-[#deb7ff]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="fixed bottom-0 left-0 w-80 h-80 bg-[#6107ba]/5 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between px-6 py-4">
+      <header className="fixed top-0 w-full z-50 flex items-center justify-between px-6 py-4 flex-row-reverse bg-transparent max-w-[430px] mx-auto">
+        <div 
+          className="text-[#deb7ff] font-bold text-2xl tracking-tighter"
+          style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
+        >
+          TESFA
+        </div>
         <Link href="/welcome">
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ color: colors.onSurface }}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
+          <button className="text-[#deb7ff] hover:opacity-80 transition-opacity duration-200 active:scale-90">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </button>
         </Link>
-        <h1 className="text-lg font-bold font-headline" style={{ color: colors.onSurface }}>הרשמה</h1>
-        <div className="w-6" />
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 flex-grow flex flex-col px-6 pt-8">
+      <main className="flex-grow flex flex-col px-6 pt-24 pb-8">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-2 font-headline" style={{ color: colors.onSurface }}>
+          <h1 
+            className="text-3xl font-bold mb-2 text-[#e3e0f8]"
+            style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
+          >
             צור חשבון חדש
-          </h2>
-          <p className="text-lg" style={{ color: colors.onSurfaceVariant }}>
+          </h1>
+          <p className="text-lg text-[#cfc2d5]">
             הצטרף לקהילת TESFA
           </p>
         </div>
@@ -62,76 +73,49 @@ export default function RegisterPage() {
           <div className="space-y-4">
             {/* Full Name */}
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: colors.onSurfaceVariant }}>
+              <label className="block text-sm font-semibold mb-2 text-[#cfc2d5]">
                 שם מלא
               </label>
               <input
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full px-4 py-4 rounded-xl outline-none transition-all"
-                style={{
-                  backgroundColor: colors.surfaceContainer,
-                  color: colors.onSurface,
-                  border: `2px solid transparent`,
-                }}
-                onFocus={(e) => e.target.style.borderColor = colors.primary}
-                onBlur={(e) => e.target.style.borderColor = 'transparent'}
+                className="w-full px-4 py-4 rounded-xl outline-none transition-all bg-[#1e1e2f] text-[#e3e0f8] border-2 border-transparent focus:border-[#deb7ff]"
                 placeholder="הזן שם מלא"
               />
             </div>
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: colors.onSurfaceVariant }}>
+              <label className="block text-sm font-semibold mb-2 text-[#cfc2d5]">
                 אימייל
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-4 rounded-xl outline-none transition-all"
-                style={{
-                  backgroundColor: colors.surfaceContainer,
-                  color: colors.onSurface,
-                  border: `2px solid transparent`,
-                }}
-                onFocus={(e) => e.target.style.borderColor = colors.primary}
-                onBlur={(e) => e.target.style.borderColor = 'transparent'}
+                className="w-full px-4 py-4 rounded-xl outline-none transition-all bg-[#1e1e2f] text-[#e3e0f8] border-2 border-transparent focus:border-[#deb7ff]"
                 placeholder="example@email.com"
               />
             </div>
 
             {/* Phone */}
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: colors.onSurfaceVariant }}>
+              <label className="block text-sm font-semibold mb-2 text-[#cfc2d5]">
                 טלפון
               </label>
               <input
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-4 py-4 rounded-xl outline-none transition-all"
-                style={{
-                  backgroundColor: colors.surfaceContainer,
-                  color: colors.onSurface,
-                  border: `2px solid transparent`,
-                }}
-                onFocus={(e) => e.target.style.borderColor = colors.primary}
-                onBlur={(e) => e.target.style.borderColor = 'transparent'}
+                className="w-full px-4 py-4 rounded-xl outline-none transition-all bg-[#1e1e2f] text-[#e3e0f8] border-2 border-transparent focus:border-[#deb7ff]"
                 placeholder="05X-XXXXXXX"
               />
             </div>
           </div>
 
           {error && (
-            <div 
-              className="text-sm text-center py-3 px-4 rounded-xl"
-              style={{ 
-                backgroundColor: `${colors.error}1A`,
-                color: colors.error,
-              }}
-            >
+            <div className="text-sm text-center py-3 px-4 rounded-xl bg-[#ffb4ab]/10 text-[#ffb4ab]">
               {error}
             </div>
           )}
@@ -139,19 +123,15 @@ export default function RegisterPage() {
           <div className="mt-auto pt-8 space-y-4">
             <button
               type="submit"
-              className="w-full py-5 rounded-full font-bold text-lg transition-all active:scale-[0.98] font-headline"
-              style={{
-                background: `linear-gradient(to left, ${colors.primaryContainer} 0%, #9B59F5 100%)`,
-                color: '#FFFFFF',
-                boxShadow: '0 8px 30px rgba(123, 47, 190, 0.3)',
-              }}
+              className="w-full py-5 rounded-full font-bold text-lg transition-all active:scale-[0.98] bg-gradient-to-l from-[#7B2FBE] to-[#9B59F5] text-white shadow-[0_8px_30px_rgba(123,47,190,0.3)]"
+              style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
             >
               המשך
             </button>
 
-            <p className="text-center text-sm" style={{ color: colors.onSurfaceVariant }}>
+            <p className="text-center text-sm text-[#cfc2d5]">
               כבר יש לך חשבון?{' '}
-              <Link href="/login" className="font-bold" style={{ color: colors.primary }}>
+              <Link href="/login" className="font-bold text-[#deb7ff]">
                 התחבר
               </Link>
             </p>
