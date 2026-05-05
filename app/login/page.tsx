@@ -105,7 +105,7 @@ export default function LoginPage() {
             <button 
               key={num}
               onClick={() => handleNumberPress(num.toString())}
-              className="w-16 h-16 mx-auto rounded-full bg-[#0F0F1F] flex items-center justify-center text-2xl font-semibold hover:bg-[#1C1C2E] active:scale-90 transition-all"
+              className="w-16 h-16 mx-auto rounded-full bg-[#1e1e2f] flex items-center justify-center text-2xl font-semibold text-[#e3e0f8] hover:bg-[#29283a] active:scale-90 transition-all"
               style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
             >
               {num}
@@ -122,7 +122,7 @@ export default function LoginPage() {
           </div>
           <button 
             onClick={() => handleNumberPress('0')}
-            className="w-16 h-16 mx-auto rounded-full bg-[#0F0F1F] flex items-center justify-center text-2xl font-semibold hover:bg-[#1C1C2E] active:scale-90 transition-all"
+            className="w-16 h-16 mx-auto rounded-full bg-[#1e1e2f] flex items-center justify-center text-2xl font-semibold text-[#e3e0f8] hover:bg-[#29283a] active:scale-90 transition-all"
             style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
           >
             0

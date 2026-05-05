@@ -115,7 +115,7 @@ export default function PinSetupPage() {
             <button 
               key={num}
               onClick={() => handleNumberPress(num.toString())}
-              className="flex items-center justify-center py-6 rounded-2xl transition-all active:scale-90 active:bg-[#deb7ff]/10"
+              className="flex items-center justify-center py-6 rounded-2xl transition-all active:scale-90 active:bg-[#deb7ff]/10 text-[#e3e0f8]"
             >
               <span 
                 className="text-3xl font-semibold"
@@ -134,7 +134,7 @@ export default function PinSetupPage() {
           </button>
           <button 
             onClick={() => handleNumberPress('0')}
-            className="flex items-center justify-center py-6 rounded-2xl transition-all active:scale-90 active:bg-[#deb7ff]/10"
+            className="flex items-center justify-center py-6 rounded-2xl transition-all active:scale-90 active:bg-[#deb7ff]/10 text-[#e3e0f8]"
           >
             <span 
               className="text-3xl font-semibold"

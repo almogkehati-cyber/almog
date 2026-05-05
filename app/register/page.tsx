@@ -80,7 +80,7 @@ export default function RegisterPage() {
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full px-4 py-4 rounded-xl outline-none transition-all bg-[#1e1e2f] text-[#e3e0f8] border-2 border-transparent focus:border-[#deb7ff]"
+                className="w-full px-4 py-4 rounded-xl outline-none transition-all bg-[#1e1e2f] text-[#e3e0f8] border border-[#4c4353]/50 focus:border-[#deb7ff] placeholder:text-[#cfc2d5]/50"
                 placeholder="הזן שם מלא"
               />
             </div>
@@ -94,7 +94,7 @@ export default function RegisterPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-4 rounded-xl outline-none transition-all bg-[#1e1e2f] text-[#e3e0f8] border-2 border-transparent focus:border-[#deb7ff]"
+                className="w-full px-4 py-4 rounded-xl outline-none transition-all bg-[#1e1e2f] text-[#e3e0f8] border border-[#4c4353]/50 focus:border-[#deb7ff] placeholder:text-[#cfc2d5]/50"
                 placeholder="example@email.com"
               />
             </div>
@@ -108,7 +108,7 @@ export default function RegisterPage() {
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-4 py-4 rounded-xl outline-none transition-all bg-[#1e1e2f] text-[#e3e0f8] border-2 border-transparent focus:border-[#deb7ff]"
+                className="w-full px-4 py-4 rounded-xl outline-none transition-all bg-[#1e1e2f] text-[#e3e0f8] border border-[#4c4353]/50 focus:border-[#deb7ff] placeholder:text-[#cfc2d5]/50"
                 placeholder="05X-XXXXXXX"
               />
             </div>
