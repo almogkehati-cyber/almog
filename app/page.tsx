@@ -60,14 +60,14 @@ export default function Home() {
   }
 
   return (
-    <div className="max-w-[430px] mx-auto">
+    <div className="w-full">
       <div 
         className="min-h-screen pb-32"
         style={{ backgroundColor: colors.surface, color: colors.onSurface }}
       >
         {/* Header */}
         <header 
-          className="fixed top-0 left-0 right-0 mx-auto max-w-[430px] z-50 flex flex-row-reverse justify-between items-center px-6 h-16"
+          className="fixed top-0 left-0 right-0 z-50 flex flex-row-reverse justify-between items-center px-6 h-16"
           style={{ backgroundColor: colors.surface }}
         >
           <div className="flex items-center gap-4">
@@ -223,7 +223,7 @@ export default function Home() {
 
         {/* Bottom Navigation */}
         <nav 
-          className="fixed bottom-0 left-0 right-0 mx-auto max-w-[430px] flex justify-around items-center h-20 px-6"
+          className="fixed bottom-0 left-0 right-0 flex justify-around items-center h-20 px-6"
           style={{ backgroundColor: colors.surfaceContainer, borderTop: `1px solid ${colors.surfaceContainerHighest}` }}
         >
           <Link href="/" className="flex flex-col items-center gap-1">
