@@ -1,8 +1,24 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+
+const colors = {
+  primary: '#deb7ff',
+  primaryContainer: '#7b2fbe',
+  secondaryContainer: '#6107ba',
+  surfaceContainerHigh: '#1C1C2E',
+  surfaceContainerLow: '#0F0F1F',
+  onSurface: '#e3e0f8',
+  onSurfaceVariant: '#cfc2d5',
+  outlineVariant: '#4c4353',
+  background: '#0A0A1A',
+  error: '#f87171',
+  success: '#4ade80',
+};
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -10,8 +26,9 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -20,252 +37,187 @@ export default function RegisterPage() {
       return;
     }
 
-    localStorage.setItem('currentUser', JSON.stringify({ fullName, email, phone }));
-    router.push('/otp');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('נא להזין כתובת אימייל תקינה');
+      return;
+    }
+
+    const phoneRegex = /^05\d{8}$/;
+    if (!phoneRegex.test(phone.replace(/-/g, ''))) {
+      setError('נא להזין מספר טלפון תקין (05X-XXXXXXX)');
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    if (typeof window !== 'undefined') {
+      const user = {
+        fullName,
+        email,
+        phone,
+        createdAt: new Date().toISOString(),
+      };
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    }
+    
+    setTimeout(() => {
+      router.push(`/otp?method=email&destination=${encodeURIComponent(email)}`);
+    }, 1000);
   };
 
   return (
     <div 
-      style={{
-        width: '100%',
-        minHeight: '100dvh',
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: '#121222',
-        color: '#e3e0f8',
-        fontFamily: 'Manrope, sans-serif',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
+      className="flex flex-col min-h-screen overflow-hidden relative"
+      style={{ backgroundColor: colors.background, color: colors.onSurface }}
     >
-      {/* Background Glow */}
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        right: 0,
-        width: '384px',
-        height: '384px',
-        background: 'rgba(222, 183, 255, 0.05)',
-        borderRadius: '50%',
-        filter: 'blur(120px)',
-        pointerEvents: 'none',
-      }} />
-      <div style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        width: '320px',
-        height: '320px',
-        background: 'rgba(97, 7, 186, 0.05)',
-        borderRadius: '50%',
-        filter: 'blur(100px)',
-        pointerEvents: 'none',
-      }} />
+      {/* Background Glow Orbs */}
+      <div 
+        className="absolute top-0 right-0 w-[256px] h-[256px] rounded-full pointer-events-none"
+        style={{ 
+          backgroundColor: `${colors.primary}1A`,
+          filter: 'blur(100px)',
+        }}
+      />
+      <div 
+        className="absolute bottom-0 left-0 w-[320px] h-[320px] rounded-full pointer-events-none"
+        style={{ 
+          backgroundColor: `${colors.secondaryContainer}0D`,
+          filter: 'blur(100px)',
+        }}
+      />
 
       {/* Header */}
-      <header style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '16px 24px',
-        flexDirection: 'row-reverse',
-      }}>
-        <span style={{
-          color: '#deb7ff',
-          fontWeight: 700,
-          fontSize: '24px',
-          letterSpacing: '-0.5px',
-          fontFamily: 'Plus Jakarta Sans, sans-serif',
-        }}>
-          TESFA
-        </span>
-        <Link href="/welcome">
-          <button style={{
-            color: '#deb7ff',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '8px',
-          }}>
-            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </button>
+      <header className="relative z-10 flex items-center justify-between px-[24px] py-[16px]">
+        <Link 
+          href="/login"
+          className="p-[8px] rounded-full transition-all hover:opacity-70"
+          style={{ color: colors.onSurfaceVariant }}
+        >
+          <svg className="w-[24px] h-[24px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
         </Link>
+        <h1 className="text-[20px] font-bold" style={{ color: colors.onSurface }}>
+          הרשמה
+        </h1>
+        <div className="w-[40px]" />
       </header>
 
       {/* Main Content */}
-      <main style={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '96px 24px 32px',
-      }}>
-        <div style={{ marginBottom: '32px' }}>
-          <h1 style={{
-            fontSize: '32px',
-            fontWeight: 700,
-            marginBottom: '8px',
-            fontFamily: 'Plus Jakarta Sans, sans-serif',
-          }}>
-            צור חשבון חדש
-          </h1>
-          <p style={{
-            fontSize: '18px',
-            color: '#cfc2d5',
-          }}>
-            הצטרף לקהילת TESFA
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit} style={{
-          padding: '0',
-          maxWidth: '400px',
-          margin: '0 auto',
-          width: '100%',
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-        }}>
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{
-              display: 'block',
-              fontSize: '14px',
-              fontWeight: 600,
-              marginBottom: '8px',
-              color: '#cfc2d5',
-            }}>
+      <main className="relative z-10 flex-grow flex flex-col items-center px-[24px] pb-[32px] pt-[16px]">
+        <form onSubmit={handleSubmit} className="w-full max-w-[400px] space-y-[20px]">
+          {/* Full Name */}
+          <div>
+            <label className="block text-[14px] mb-[8px] text-right" style={{ color: colors.onSurfaceVariant }}>
               שם מלא
             </label>
             <input
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              placeholder="הזן שם מלא"
+              className="w-full px-[16px] py-[14px] rounded-[12px] text-[16px] text-right outline-none"
               style={{
-                width: '100%',
-                height: '56px',
-                fontSize: '18px',
-                padding: '0 16px',
-                borderRadius: '28px',
-                border: '1px solid rgba(76, 67, 83, 0.5)',
-                backgroundColor: '#1e1e2f',
-                color: '#e3e0f8',
-                outline: 'none',
+                backgroundColor: colors.surfaceContainerLow,
+                border: `1px solid ${colors.outlineVariant}`,
+                color: colors.onSurface,
               }}
+              placeholder="יוסי כהן"
             />
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{
-              display: 'block',
-              fontSize: '14px',
-              fontWeight: 600,
-              marginBottom: '8px',
-              color: '#cfc2d5',
-            }}>
+          {/* Email */}
+          <div>
+            <label className="block text-[14px] mb-[8px] text-right" style={{ color: colors.onSurfaceVariant }}>
               אימייל
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="example@email.com"
+              className="w-full px-[16px] py-[14px] rounded-[12px] text-[16px] text-right outline-none"
               style={{
-                width: '100%',
-                height: '56px',
-                fontSize: '18px',
-                padding: '0 16px',
-                borderRadius: '28px',
-                border: '1px solid rgba(76, 67, 83, 0.5)',
-                backgroundColor: '#1e1e2f',
-                color: '#e3e0f8',
-                outline: 'none',
+                backgroundColor: colors.surfaceContainerLow,
+                border: `1px solid ${colors.outlineVariant}`,
+                color: colors.onSurface,
               }}
+              placeholder="example@email.com"
+              dir="ltr"
             />
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{
-              display: 'block',
-              fontSize: '14px',
-              fontWeight: 600,
-              marginBottom: '8px',
-              color: '#cfc2d5',
-            }}>
-              טלפון
+          {/* Phone */}
+          <div>
+            <label className="block text-[14px] mb-[8px] text-right" style={{ color: colors.onSurfaceVariant }}>
+              מספר טלפון
             </label>
             <input
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              placeholder="05X-XXXXXXX"
+              className="w-full px-[16px] py-[14px] rounded-[12px] text-[16px] text-right outline-none"
               style={{
-                width: '100%',
-                height: '56px',
-                fontSize: '18px',
-                padding: '0 16px',
-                borderRadius: '28px',
-                border: '1px solid rgba(76, 67, 83, 0.5)',
-                backgroundColor: '#1e1e2f',
-                color: '#e3e0f8',
-                outline: 'none',
+                backgroundColor: colors.surfaceContainerLow,
+                border: `1px solid ${colors.outlineVariant}`,
+                color: colors.onSurface,
               }}
+              placeholder="050-1234567"
+              dir="ltr"
             />
           </div>
 
+          {/* Note about PIN */}
+          <div 
+            className="text-[13px] text-center py-[12px] px-[16px] rounded-[12px]"
+            style={{ 
+              backgroundColor: `${colors.primary}1A`,
+              color: colors.primary,
+            }}
+          >
+            💡 תגדיר קוד PIN בשלב הבא
+          </div>
+
+          {/* Error Message */}
           {error && (
-            <div style={{
-              fontSize: '14px',
-              textAlign: 'center',
-              padding: '12px 16px',
-              borderRadius: '12px',
-              backgroundColor: 'rgba(255, 180, 171, 0.1)',
-              color: '#ffb4ab',
-              marginBottom: '20px',
-            }}>
+            <div 
+              className="text-[14px] text-center py-[12px] px-[16px] rounded-[8px]"
+              style={{ 
+                backgroundColor: `${colors.error}1A`,
+                color: colors.error,
+              }}
+            >
               {error}
             </div>
           )}
 
-          <div style={{ marginTop: 'auto', paddingTop: '32px' }}>
-            <button
-              type="submit"
-              style={{
-                width: '100%',
-                height: '56px',
-                fontSize: '18px',
-                fontWeight: 700,
-                borderRadius: '28px',
-                border: 'none',
-                background: 'linear-gradient(to left, #7B2FBE, #9B59F5)',
-                color: '#FFFFFF',
-                cursor: 'pointer',
-                boxShadow: '0 8px 30px rgba(123, 47, 190, 0.3)',
-                fontFamily: 'Plus Jakarta Sans, sans-serif',
-              }}
-            >
-              המשך
-            </button>
-
-            <p style={{
-              textAlign: 'center',
-              fontSize: '14px',
-              color: '#cfc2d5',
-              marginTop: '16px',
-            }}>
-              כבר יש לך חשבון?{' '}
-              <Link href="/login" style={{ color: '#deb7ff', fontWeight: 700, textDecoration: 'none' }}>
-                התחבר
-              </Link>
-            </p>
-          </div>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full py-[16px] rounded-full text-[17px] font-bold transition-all active:scale-98 disabled:opacity-50"
+            style={{
+              background: `linear-gradient(135deg, ${colors.primaryContainer} 0%, #9B59F5 100%)`,
+              color: '#FFFFFF',
+              boxShadow: `0 4px 16px ${colors.primaryContainer}40`,
+            }}
+          >
+            {isSubmitting ? 'נרשם...' : 'הרשם'}
+          </button>
         </form>
+
+        {/* Login Link */}
+        <div className="mt-[24px] text-center">
+          <p className="text-[14px]" style={{ color: colors.onSurfaceVariant }}>
+            כבר יש לך חשבון?{' '}
+            <Link 
+              href="/login"
+              className="font-bold hover:underline"
+              style={{ color: colors.primary }}
+            >
+              התחבר
+            </Link>
+          </p>
+        </div>
       </main>
     </div>
   );

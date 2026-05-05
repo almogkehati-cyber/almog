@@ -1,8 +1,24 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+
+const colors = {
+  primary: '#deb7ff',
+  primaryContainer: '#7b2fbe',
+  secondaryContainer: '#6107ba',
+  surfaceContainerHigh: '#1C1C2E',
+  surfaceContainerLow: '#0F0F1F',
+  onSurface: '#e3e0f8',
+  onSurfaceVariant: '#cfc2d5',
+  outlineVariant: '#4c4353',
+  background: '#0A0A1A',
+  error: '#f87171',
+  success: '#4ade80',
+};
 
 export default function OtpPage() {
   const router = useRouter();
@@ -19,6 +35,10 @@ export default function OtpPage() {
     if (value && index < 5) {
       inputRefs.current[index + 1]?.focus();
     }
+
+    if (newOtp.every(digit => digit !== '')) {
+      setTimeout(() => router.push('/pin-setup'), 500);
+    }
   };
 
   const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
@@ -27,146 +47,62 @@ export default function OtpPage() {
     }
   };
 
-  const handleSubmit = () => {
-    if (otp.every(digit => digit !== '')) {
-      router.push('/security-setup');
-    }
-  };
-
   return (
     <div 
-      style={{
-        width: '100%',
-        minHeight: '100dvh',
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: '#121222',
-        color: '#e3e0f8',
-        fontFamily: 'Manrope, sans-serif',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
+      className="flex flex-col min-h-screen overflow-hidden relative"
+      style={{ backgroundColor: colors.background, color: colors.onSurface }}
     >
       {/* Background Glow */}
-      <div style={{
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
-        transform: 'translate(50%, 50%)',
-        width: '192px',
-        height: '192px',
-        background: '#7b2fbe',
-        filter: 'blur(100px)',
-        opacity: 0.2,
-        borderRadius: '50%',
-        zIndex: -1,
-        pointerEvents: 'none',
-      }} />
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        transform: 'translate(-50%, -50%)',
-        width: '192px',
-        height: '192px',
-        background: '#d7baff',
-        filter: 'blur(100px)',
-        opacity: 0.2,
-        borderRadius: '50%',
-        zIndex: -1,
-        pointerEvents: 'none',
-      }} />
+      <div 
+        className="absolute top-0 right-0 w-[256px] h-[256px] rounded-full pointer-events-none"
+        style={{ 
+          backgroundColor: `${colors.primary}1A`,
+          filter: 'blur(100px)',
+        }}
+      />
 
       {/* Header */}
-      <header style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '16px 24px',
-        flexDirection: 'row-reverse',
-      }}>
-        <span style={{
-          color: '#deb7ff',
-          fontWeight: 700,
-          fontSize: '24px',
-          letterSpacing: '-0.5px',
-          fontFamily: 'Plus Jakarta Sans, sans-serif',
-        }}>
-          TESFA
-        </span>
+      <header className="relative z-10 flex items-center justify-between px-6 h-16 mt-4">
         <Link href="/register">
-          <button style={{
-            width: '40px',
-            height: '40px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: '50%',
-            background: '#333345',
-            border: 'none',
-            cursor: 'pointer',
-          }}>
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#deb7ff" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </button>
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ color: colors.onSurface }}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
         </Link>
+        <h1 className="text-lg font-bold" style={{ color: colors.onSurface }}>אימות OTP</h1>
+        <div className="w-6" />
       </header>
 
       {/* Main Content */}
-      <main style={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '96px 24px 48px',
-      }}>
-        {/* SMS Icon */}
-        <div style={{
-          width: '80px',
-          height: '80px',
-          background: 'rgba(123, 47, 190, 0.2)',
-          borderRadius: '50%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: '32px',
-        }}>
-          <svg width="40" height="40" fill="#deb7ff" viewBox="0 0 24 24">
-            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
-          </svg>
+      <main className="relative z-10 flex-grow flex flex-col items-center justify-center px-6">
+        {/* Icon */}
+        <div 
+          className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+          style={{ backgroundColor: `${colors.primaryContainer}33` }}
+        >
+          <span className="text-4xl">📱</span>
         </div>
 
-        <h1 style={{
-          fontSize: '28px',
-          fontWeight: 700,
-          marginBottom: '12px',
-          fontFamily: 'Plus Jakarta Sans, sans-serif',
-        }}>
-          אימות מספר טלפון
-        </h1>
-        <p style={{
-          color: '#cfc2d5',
-          fontSize: '16px',
-          marginBottom: '48px',
-          textAlign: 'center',
-        }}>
+        {/* Title */}
+        <h2 className="text-2xl font-bold mb-2" style={{ color: colors.onSurface }}>
+          הזן את הקוד
+        </h2>
+        <p className="text-sm text-center mb-8" style={{ color: colors.onSurfaceVariant }}>
           שלחנו קוד בן 6 ספרות לטלפון שלך
         </p>
 
+        {/* Mock Mode Notice */}
+        <div 
+          className="w-full max-w-[400px] text-center py-3 px-4 rounded-xl mb-6"
+          style={{ 
+            backgroundColor: `${colors.success}1A`,
+            color: colors.success,
+          }}
+        >
+          🎭 מצב דמה - הזן כל 6 ספרות
+        </div>
+
         {/* OTP Input */}
-        <div style={{
-          display: 'flex',
-          flexDirection: 'row-reverse',
-          gap: '12px',
-          marginBottom: '48px',
-        }}>
+        <div className="flex gap-3 mb-8">
           {otp.map((digit, index) => (
             <input
               key={index}
@@ -177,55 +113,20 @@ export default function OtpPage() {
               value={digit}
               onChange={(e) => handleChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e)}
+              className="w-12 h-14 rounded-xl text-center text-2xl font-bold outline-none transition-all"
               style={{
-                width: '48px',
-                height: '56px',
-                borderRadius: '12px',
-                border: digit ? '2px solid #7b2fbe' : '2px solid #333345',
-                background: '#1e1e2f',
-                color: '#e3e0f8',
-                fontSize: '24px',
-                fontWeight: 700,
-                textAlign: 'center',
-                outline: 'none',
-                fontFamily: 'Plus Jakarta Sans, sans-serif',
+                backgroundColor: colors.surfaceContainerLow,
+                border: digit ? `2px solid ${colors.primary}` : `1px solid ${colors.outlineVariant}`,
+                color: colors.onSurface,
               }}
             />
           ))}
         </div>
 
-        {/* Verify Button */}
-        <button 
-          onClick={handleSubmit}
-          style={{
-            width: '100%',
-            maxWidth: '320px',
-            height: '56px',
-            fontSize: '18px',
-            fontWeight: 700,
-            borderRadius: '28px',
-            border: 'none',
-            background: 'linear-gradient(to left, #7B2FBE, #9B59F5)',
-            color: '#FFFFFF',
-            cursor: 'pointer',
-            boxShadow: '0 8px 30px rgba(123, 47, 190, 0.3)',
-            fontFamily: 'Plus Jakarta Sans, sans-serif',
-            marginBottom: '24px',
-          }}
-        >
-          אמת קוד
-        </button>
-
-        <p style={{ color: '#cfc2d5', fontSize: '14px' }}>
+        {/* Resend */}
+        <p className="text-sm" style={{ color: colors.onSurfaceVariant }}>
           לא קיבלת קוד?{' '}
-          <button style={{
-            color: '#deb7ff',
-            fontWeight: 600,
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            fontSize: '14px',
-          }}>
+          <button className="font-bold" style={{ color: colors.primary }}>
             שלח שוב
           </button>
         </p>
