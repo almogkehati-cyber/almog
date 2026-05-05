@@ -13,7 +13,6 @@ export default function LoginPage() {
     if (pin.length < 4) {
       const newPin = pin + num;
       setPin(newPin);
-      
       if (newPin.length === 4) {
         setTimeout(() => handlePinSubmit(newPin), 100);
       }
@@ -26,15 +25,13 @@ export default function LoginPage() {
   };
 
   const handlePinSubmit = (pinToCheck: string) => {
-    if (typeof window !== 'undefined') {
-      const savedPin = localStorage.getItem('userPin');
-      if (savedPin && savedPin === pinToCheck) {
-        localStorage.setItem('isLoggedIn', 'true');
-        router.push('/');
-      } else {
-        setError('קוד PIN שגוי');
-        setPin('');
-      }
+    const savedPin = localStorage.getItem('userPin');
+    if (savedPin && savedPin === pinToCheck) {
+      localStorage.setItem('isLoggedIn', 'true');
+      router.push('/');
+    } else {
+      setError('קוד PIN שגוי');
+      setPin('');
     }
   };
 
@@ -44,33 +41,23 @@ export default function LoginPage() {
   };
 
   return (
-    <div 
-      className="flex flex-col min-h-screen overflow-hidden relative"
-      style={{ backgroundColor: '#0A0A1A', color: '#e3e0f8' }}
-    >
-      {/* Background Glow */}
-      <div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{ 
-          background: 'radial-gradient(circle, rgba(123, 47, 190, 0.15) 0%, transparent 70%)',
-        }}
-      />
+    <div className="min-h-screen flex flex-col overflow-hidden relative"
+      style={{ backgroundColor: '#0A0A1A', color: '#e3e0f8', fontFamily: 'Manrope, sans-serif' }}>
+      
+      {/* Background */}
+      <div className="fixed inset-0 pointer-events-none" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBC-F3jX6XF8V7N6Q3p-Dk8H7f-9f7P-V2D6_y_K4P-C7_A=s3000')", backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.15, mixBlendMode: 'overlay' }} />
+      <div className="fixed inset-0 pointer-events-none" style={{ background: 'linear-gradient(to bottom, transparent, rgba(10, 10, 26, 0.5), #0A0A1A)' }} />
+      
+      {/* Glow Orbs */}
+      <div className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[100px] pointer-events-none" style={{ backgroundColor: 'rgba(222, 183, 255, 0.1)' }} />
+      <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full blur-[100px] pointer-events-none" style={{ backgroundColor: 'rgba(97, 7, 186, 0.05)' }} />
 
       {/* Header / Logo */}
-      <header className="relative z-10 flex flex-col items-center pt-12 pb-6">
-        <div 
-          className="w-16 h-16 rounded-full flex items-center justify-center mb-3"
-          style={{ backgroundColor: 'rgba(123, 47, 190, 0.3)' }}
-        >
-          <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="#deb7ff" strokeWidth={1.5}>
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" strokeLinecap="round"/>
-            <path d="M12 6v12M8 10l4-4 4 4M8 14l4 4 4-4" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+      <header className="relative z-10 flex flex-col items-center pt-12 pb-8">
+        <div className="w-16 h-16 rounded-full flex items-center justify-center mb-3" style={{ backgroundColor: 'rgba(123, 47, 190, 0.2)' }}>
+          <span className="material-symbols-outlined text-4xl" style={{ color: '#deb7ff' }}>nest_eco_leaf</span>
         </div>
-        <h1 
-          className="font-bold text-2xl tracking-tight"
-          style={{ color: '#deb7ff' }}
-        >
+        <h1 className="font-bold text-3xl tracking-tighter" style={{ color: '#deb7ff', fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
           TESFA
         </h1>
       </header>
@@ -78,24 +65,24 @@ export default function LoginPage() {
       {/* Main Content */}
       <main className="relative z-10 flex-grow flex flex-col items-center px-6">
         {/* Title */}
-        <div className="text-center mb-6">
-          <h2 className="text-xl font-bold mb-2" style={{ color: '#e3e0f8' }}>
+        <div className="text-center mb-10">
+          <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', color: '#e3e0f8' }}>
             הזן קוד PIN
           </h2>
-          <p className="text-sm" style={{ color: '#9ca3af' }}>
+          <p className="text-sm" style={{ color: '#cfc2d5' }}>
             השתמש בקוד האישי שלך לגישה מהירה
           </p>
         </div>
 
         {/* PIN Dots - 4 dots */}
-        <div className="flex justify-center gap-4 mb-8">
+        <div className="flex gap-6 mb-8 items-center justify-center">
           {[0, 1, 2, 3].map((index) => (
             <div
               key={index}
-              className="w-3.5 h-3.5 rounded-full transition-all duration-200"
+              className="w-4 h-4 rounded-full transition-all duration-200"
               style={{
-                backgroundColor: index < pin.length ? '#deb7ff' : '#4b5563',
-                boxShadow: index < pin.length ? '0 0 10px rgba(222, 183, 255, 0.5)' : 'none',
+                backgroundColor: index < pin.length ? '#deb7ff' : '#4c4353',
+                boxShadow: index < pin.length ? '0 0 12px #deb7ff' : 'none',
               }}
             />
           ))}
@@ -104,87 +91,71 @@ export default function LoginPage() {
         {/* Biometric Button */}
         <button
           onClick={handleBiometric}
-          className="w-full max-w-[280px] flex items-center justify-center gap-3 py-4 rounded-full mb-6 transition-all active:scale-95"
+          className="mb-8 flex items-center gap-3 px-6 py-3 rounded-full transition-all active:scale-95"
           style={{ 
-            backgroundColor: 'rgba(75, 85, 99, 0.3)',
-            border: '1px solid rgba(75, 85, 99, 0.5)',
-          }}
-        >
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="#deb7ff" strokeWidth={1.5}>
-            <path d="M12 11c0 1.66-1.34 3-3 3s-3-1.34-3-3c0-.55.45-1 1-1s1 .45 1 1c0 .55.45 1 1 1s1-.45 1-1c0-1.66 1.34-3 3-3s3 1.34 3 3c0 .55-.45 1-1 1s-1-.45-1-1c0-.55-.45-1-1-1s-1 .45-1 1z"/>
-            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5 2.24-5 5-5"/>
-            <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2"/>
-            <path d="M7 3.34C4.69 4.84 3 7.73 3 11"/>
-          </svg>
-          <span style={{ color: '#e3e0f8' }}>התחברות ביומטרית</span>
+            backgroundColor: '#1C1C2E',
+            border: '1px solid rgba(76, 67, 83, 0.3)',
+            color: '#deb7ff'
+          }}>
+          <span className="material-symbols-outlined text-2xl">fingerprint</span>
+          <span className="font-medium">התחברות ביומטרית</span>
         </button>
 
         {/* Forgot PIN */}
-        <p className="text-sm mb-6" style={{ color: '#9ca3af' }}>
-          שכחת את קוד ה-PIN?
-        </p>
+        <div className="mb-12">
+          <a href="#" className="text-sm font-medium hover:underline underline-offset-4" style={{ color: '#deb7ff' }}>
+            שכחת את קוד ה-PIN?
+          </a>
+        </div>
 
-        {/* Error Message */}
+        {/* Error */}
         {error && (
-          <div 
-            className="text-sm text-center py-3 px-4 rounded-xl mb-4 w-full max-w-[280px]"
-            style={{ 
-              backgroundColor: 'rgba(248, 113, 113, 0.1)',
-              color: '#f87171',
-            }}
-          >
+          <div className="text-sm text-center py-3 px-4 rounded-xl mb-4" style={{ backgroundColor: 'rgba(255, 180, 171, 0.1)', color: '#ffb4ab' }}>
             {error}
           </div>
         )}
 
-        {/* Numeric Keypad - transparent buttons */}
-        <div className="w-full max-w-[280px] grid grid-cols-3 gap-y-6 gap-x-12 mb-8">
+        {/* Numeric Keypad - with background */}
+        <div className="w-full max-w-xs grid grid-cols-3 gap-y-4 gap-x-6 pb-12">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
             <button
               key={num}
               onClick={() => handleNumberPress(num.toString())}
-              className="w-16 h-16 mx-auto flex items-center justify-center text-3xl font-light transition-all active:scale-90 active:opacity-70"
-              style={{ color: '#e3e0f8' }}
-            >
+              className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl font-semibold transition-all hover:bg-[#1C1C2E] active:scale-90"
+              style={{ backgroundColor: '#0F0F1F', fontFamily: 'Plus Jakarta Sans, sans-serif', color: '#e3e0f8' }}>
               {num}
             </button>
           ))}
-          <button
-            onClick={handleBackspace}
-            className="w-16 h-16 mx-auto flex items-center justify-center transition-all active:scale-90"
-          >
-            <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="#9ca3af" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
-            </svg>
-          </button>
+          
+          {/* Bottom Row */}
+          <div className="flex items-center justify-center">
+            <button className="w-16 h-16 flex items-center justify-center active:scale-90 transition-all" style={{ color: '#cfc2d5' }}>
+              <span className="material-symbols-outlined text-2xl">face</span>
+            </button>
+          </div>
           <button
             onClick={() => handleNumberPress('0')}
-            className="w-16 h-16 mx-auto flex items-center justify-center text-3xl font-light transition-all active:scale-90 active:opacity-70"
-            style={{ color: '#e3e0f8' }}
-          >
+            className="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl font-semibold transition-all hover:bg-[#1C1C2E] active:scale-90"
+            style={{ backgroundColor: '#0F0F1F', fontFamily: 'Plus Jakarta Sans, sans-serif', color: '#e3e0f8' }}>
             0
           </button>
-          <button
-            className="w-16 h-16 mx-auto flex items-center justify-center transition-all active:scale-90"
-          >
-            <span className="text-2xl">😊</span>
-          </button>
-        </div>
-
-        {/* Switch Account */}
-        <div className="mt-auto pb-8 text-center">
-          <p className="text-sm" style={{ color: '#9ca3af' }}>
-            לא המשתמש שלך?{' '}
-            <Link 
-              href="/register"
-              className="font-medium"
-              style={{ color: '#deb7ff' }}
-            >
-              החלף חשבון
-            </Link>
-          </p>
+          <div className="flex items-center justify-center">
+            <button onClick={handleBackspace} className="w-16 h-16 flex items-center justify-center active:scale-90 transition-all" style={{ color: '#cfc2d5' }}>
+              <span className="material-symbols-outlined text-2xl">backspace</span>
+            </button>
+          </div>
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="relative z-10 w-full py-8 text-center mt-auto">
+        <p className="text-sm" style={{ color: '#cfc2d5' }}>
+          לא המשתמש שלך?{' '}
+          <Link href="/register" className="font-bold mr-1 hover:underline underline-offset-4" style={{ color: '#deb7ff' }}>
+            החלף חשבון
+          </Link>
+        </p>
+      </footer>
     </div>
   );
 }

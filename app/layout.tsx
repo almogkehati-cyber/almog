@@ -1,14 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Heebo } from "next/font/google";
 import "./globals.css";
 
-const heebo = Heebo({
-  variable: "--font-heebo",
-  subsets: ["latin", "hebrew"],
-});
-
 export const metadata: Metadata = {
-  title: "TESFA - מטבע הקהילה",
+  title: "TESFA - המטבע של הקהילה",
   description: "מערכת כלכלית חברתית",
   appleWebApp: {
     capable: true,
@@ -31,11 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="he" dir="rtl" className={`${heebo.variable} h-full antialiased`}>
+    <html lang="he" dir="rtl" className="dark">
       <head>
-        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>
-      <body className="min-h-full bg-[#0A0A1A] text-white font-[family-name:var(--font-heebo)]">
+      <body style={{ backgroundColor: '#121222', color: '#e3e0f8', fontFamily: 'Manrope, sans-serif', minHeight: '100dvh' }}>
         {children}
       </body>
     </html>
