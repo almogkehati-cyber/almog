@@ -28,7 +28,7 @@ export default function LoginPage() {
 
   return (
     <div 
-      className="w-full max-w-[430px] mx-auto min-h-screen flex flex-col overflow-hidden relative"
+      className="w-full min-h-screen flex flex-col overflow-hidden relative"
       style={{ 
         backgroundColor: '#0A0A1A', 
         color: '#e3e0f8',

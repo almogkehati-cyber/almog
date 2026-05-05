@@ -8,7 +8,7 @@ export default function SecuritySetupPage() {
 
   return (
     <div 
-      className="w-full max-w-[430px] mx-auto min-h-screen flex flex-col items-center relative overflow-hidden"
+      className="w-full min-h-screen flex flex-col items-center relative overflow-hidden"
       style={{ 
         backgroundColor: '#121222', 
         color: '#e3e0f8',
@@ -22,7 +22,7 @@ export default function SecuritySetupPage() {
       <div className="fixed bottom-0 left-0 w-80 h-80 bg-[#d7baff]/5 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Header */}
-      <nav className="fixed top-0 w-full z-50 flex items-center justify-between px-6 py-4 flex-row-reverse bg-transparent max-w-[430px] mx-auto">
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 flex-row-reverse bg-transparent">
         <div 
           className="text-[#deb7ff] font-bold text-2xl tracking-tighter"
           style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}

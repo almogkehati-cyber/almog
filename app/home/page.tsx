@@ -36,7 +36,7 @@ export default function HomePage() {
 
   return (
     <div 
-      className="w-full max-w-[430px] mx-auto min-h-screen relative overflow-hidden"
+      className="w-full min-h-screen relative overflow-hidden"
       style={{ 
         backgroundColor: '#121222',
         fontFamily: 'Manrope, sans-serif'

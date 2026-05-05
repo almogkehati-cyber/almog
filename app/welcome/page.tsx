@@ -12,7 +12,7 @@ export default function WelcomePage() {
 
   return (
     <div 
-      className="w-full max-w-[430px] mx-auto min-h-screen flex flex-col items-center justify-between p-8 text-right relative overflow-hidden"
+      className="w-full min-h-screen flex flex-col items-center justify-between p-6 text-right relative overflow-hidden"
       style={{ 
         backgroundColor: '#0A0A1A', 
         color: '#e3e0f8',
@@ -33,7 +33,7 @@ export default function WelcomePage() {
       <div className="fixed top-[20%] right-[-5%] w-[30%] h-[30%] bg-[#7b2fbe]/5 blur-[100px] rounded-full pointer-events-none" />
 
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 flex-row-reverse bg-transparent max-w-[430px] mx-auto">
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 flex-row-reverse bg-transparent">
         <div 
           className="text-[#deb7ff] font-bold text-2xl tracking-tighter"
           style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
