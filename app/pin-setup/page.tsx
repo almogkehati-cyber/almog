@@ -43,33 +43,73 @@ export default function PinSetupPage() {
 
   return (
     <div 
-      className="w-full min-h-screen flex flex-col overflow-hidden relative"
-      style={{ 
-        backgroundColor: '#121222', 
+      style={{
+        width: '100%',
+        minHeight: '100dvh',
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: '#121222',
         color: '#e3e0f8',
         fontFamily: 'Manrope, sans-serif',
-        minHeight: 'max(884px, 100dvh)'
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
       {/* Background Glow */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="absolute top-1/4 -right-20 w-80 h-80 bg-[#deb7ff]/10 rounded-full blur-[100px]" />
-        <div className="absolute bottom-1/4 -left-20 w-80 h-80 bg-[#6107ba]/10 rounded-full blur-[100px]" />
-      </div>
+      <div style={{
+        position: 'fixed',
+        top: '25%',
+        right: '-80px',
+        width: '320px',
+        height: '320px',
+        background: 'rgba(222, 183, 255, 0.1)',
+        borderRadius: '50%',
+        filter: 'blur(100px)',
+        pointerEvents: 'none',
+      }} />
+      <div style={{
+        position: 'fixed',
+        bottom: '25%',
+        left: '-80px',
+        width: '320px',
+        height: '320px',
+        background: 'rgba(97, 7, 186, 0.1)',
+        borderRadius: '50%',
+        filter: 'blur(100px)',
+        pointerEvents: 'none',
+      }} />
 
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 flex-row-reverse bg-transparent">
-        <div className="flex items-center gap-2">
-          <span 
-            className="text-[#deb7ff] font-bold text-2xl tracking-tighter"
-            style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
-          >
-            TESFA
-          </span>
-        </div>
+      <header style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '16px 24px',
+        flexDirection: 'row-reverse',
+      }}>
+        <span style={{
+          color: '#deb7ff',
+          fontWeight: 700,
+          fontSize: '24px',
+          letterSpacing: '-0.5px',
+          fontFamily: 'Plus Jakarta Sans, sans-serif',
+        }}>
+          TESFA
+        </span>
         <Link href="/security-setup">
-          <button className="text-[#deb7ff] hover:opacity-80 transition-opacity duration-200 active:scale-90">
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <button style={{
+            color: '#deb7ff',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '8px',
+          }}>
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </button>
@@ -77,16 +117,32 @@ export default function PinSetupPage() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col items-center justify-center px-8 pt-24 pb-12 w-full">
+      <main style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '96px 24px 48px',
+        width: '100%',
+      }}>
         {/* Header Text */}
-        <div className="text-center mb-12">
-          <h1 
-            className="text-3xl font-bold mb-4 tracking-tight"
-            style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
-          >
+        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <h1 style={{
+            fontSize: '32px',
+            fontWeight: 700,
+            marginBottom: '16px',
+            fontFamily: 'Plus Jakarta Sans, sans-serif',
+          }}>
             {step === 'set' ? 'יצירת קוד PIN' : 'אימות קוד PIN'}
           </h1>
-          <p className="text-[#cfc2d5] text-lg leading-relaxed max-w-[280px] mx-auto">
+          <p style={{
+            color: '#cfc2d5',
+            fontSize: '18px',
+            lineHeight: 1.6,
+            maxWidth: '280px',
+            margin: '0 auto',
+          }}>
             {step === 'set' 
               ? 'אבטח את הארנק שלך באמצעות קוד אישי בן 4 ספרות'
               : 'הזן שוב את הקוד לאימות'
@@ -94,60 +150,103 @@ export default function PinSetupPage() {
           </p>
         </div>
 
-        {/* PIN Indicators */}
-        <div className="flex flex-row-reverse justify-center gap-6 mb-16">
+        {/* PIN Dots */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'row-reverse',
+          justifyContent: 'center',
+          gap: '16px',
+          marginBottom: '48px',
+        }}>
           {[0, 1, 2, 3].map((index) => (
             <div 
               key={index}
-              className="w-4 h-4 rounded-full transition-all duration-300"
               style={{
-                backgroundColor: index < pin.length ? '#deb7ff' : '#333345',
-                boxShadow: index < pin.length ? '0 0 15px rgba(222, 183, 255, 0.5)' : 'none',
-                border: index >= pin.length ? '1px solid rgba(76, 67, 83, 0.3)' : 'none'
+                width: '16px',
+                height: '16px',
+                borderRadius: '8px',
+                backgroundColor: index < pin.length ? '#7B2FBE' : '#8B8FA8',
+                boxShadow: index < pin.length ? '0 0 15px rgba(123, 47, 190, 0.5)' : 'none',
+                transition: 'all 0.3s',
               }}
             />
           ))}
         </div>
 
         {/* Numpad */}
-        <div className="w-full grid grid-cols-3 gap-y-6 gap-x-4 mt-auto">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '16px',
+          maxWidth: '320px',
+          margin: '0 auto',
+          width: '100%',
+        }}>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
             <button 
               key={num}
               onClick={() => handleNumberPress(num.toString())}
-              className="flex items-center justify-center py-6 rounded-2xl transition-all active:scale-90 active:bg-[#deb7ff]/10 text-[#e3e0f8]"
+              style={{
+                width: '80px',
+                height: '80px',
+                borderRadius: '40px',
+                background: '#1E1E2E',
+                border: 'none',
+                fontSize: '28px',
+                fontWeight: 600,
+                color: '#e3e0f8',
+                cursor: 'pointer',
+                fontFamily: 'Plus Jakarta Sans, sans-serif',
+                margin: '0 auto',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
             >
-              <span 
-                className="text-3xl font-semibold"
-                style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
-              >
-                {num}
-              </span>
+              {num}
             </button>
           ))}
           
           {/* Bottom Row */}
-          <button className="flex items-center justify-center py-6 rounded-2xl transition-all opacity-40">
-            <svg className="w-8 h-8 text-[#cfc2d5]" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M17.81 4.47c-.08 0-.16-.02-.23-.06C15.66 3.42 14 3 12.01 3c-1.98 0-3.86.47-5.57 1.41-.24.13-.54.04-.68-.2-.13-.24-.04-.55.2-.68C7.82 2.52 9.86 2 12.01 2c2.13 0 3.99.47 6.03 1.52.25.13.34.43.21.67-.09.18-.26.28-.44.28z"/>
-            </svg>
-          </button>
+          <div style={{ width: '80px', height: '80px', margin: '0 auto' }} />
           <button 
             onClick={() => handleNumberPress('0')}
-            className="flex items-center justify-center py-6 rounded-2xl transition-all active:scale-90 active:bg-[#deb7ff]/10 text-[#e3e0f8]"
+            style={{
+              width: '80px',
+              height: '80px',
+              borderRadius: '40px',
+              background: '#1E1E2E',
+              border: 'none',
+              fontSize: '28px',
+              fontWeight: 600,
+              color: '#e3e0f8',
+              cursor: 'pointer',
+              fontFamily: 'Plus Jakarta Sans, sans-serif',
+              margin: '0 auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
-            <span 
-              className="text-3xl font-semibold"
-              style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
-            >
-              0
-            </span>
+            0
           </button>
           <button 
             onClick={handleBackspace}
-            className="flex items-center justify-center py-6 rounded-2xl transition-all active:scale-90 text-[#ffb4ab]/80"
+            style={{
+              width: '80px',
+              height: '80px',
+              borderRadius: '40px',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              margin: '0 auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#ffb4ab',
+            }}
           >
-            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
             </svg>
           </button>
@@ -155,11 +254,23 @@ export default function PinSetupPage() {
       </main>
 
       {/* Footer */}
-      <footer className="p-8 flex flex-col items-center gap-4">
-        <button className="text-[#deb7ff] text-sm font-semibold tracking-wide hover:underline transition-all">
+      <footer style={{
+        padding: '32px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '16px',
+      }}>
+        <button style={{
+          color: '#deb7ff',
+          fontSize: '14px',
+          fontWeight: 600,
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+        }}>
           שכחתי את הקוד שלי
         </button>
-        <div className="w-12 h-1.5 bg-[#333345] rounded-full mt-2" />
       </footer>
     </div>
   );

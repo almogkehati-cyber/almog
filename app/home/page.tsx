@@ -28,96 +28,178 @@ export default function HomePage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#121222]">
-        <p className="text-[#e3e0f8]">טוען...</p>
+      <div style={{
+        minHeight: '100dvh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#121222',
+        color: '#e3e0f8',
+      }}>
+        <p>טוען...</p>
       </div>
     );
   }
 
   return (
     <div 
-      className="w-full min-h-screen relative overflow-hidden"
-      style={{ 
+      style={{
+        width: '100%',
+        minHeight: '100dvh',
         backgroundColor: '#121222',
-        fontFamily: 'Manrope, sans-serif'
+        fontFamily: 'Manrope, sans-serif',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
       {/* Background Glow */}
-      <div className="fixed top-0 right-0 w-96 h-96 bg-[#deb7ff]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="fixed bottom-0 left-0 w-80 h-80 bg-[#6107ba]/5 rounded-full blur-[100px] pointer-events-none" />
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        right: 0,
+        width: '384px',
+        height: '384px',
+        background: 'rgba(222, 183, 255, 0.05)',
+        borderRadius: '50%',
+        filter: 'blur(120px)',
+        pointerEvents: 'none',
+      }} />
+      <div style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        width: '320px',
+        height: '320px',
+        background: 'rgba(97, 7, 186, 0.05)',
+        borderRadius: '50%',
+        filter: 'blur(100px)',
+        pointerEvents: 'none',
+      }} />
 
       {/* Header */}
-      <header className="relative z-10 flex flex-row-reverse justify-between items-center px-6 h-16 mt-4">
-        <div className="flex items-center gap-4">
-          <span 
-            className="text-2xl font-black tracking-tight text-[#deb7ff]"
-            style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
-          >
-            TESFA
-          </span>
-        </div>
+      <header style={{
+        position: 'relative',
+        zIndex: 10,
+        display: 'flex',
+        flexDirection: 'row-reverse',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '16px 24px',
+        marginTop: '16px',
+      }}>
+        <span style={{
+          fontSize: '24px',
+          fontWeight: 800,
+          color: '#deb7ff',
+          fontFamily: 'Plus Jakarta Sans, sans-serif',
+        }}>
+          TESFA
+        </span>
         <button 
           onClick={handleLogout}
-          className="p-2 rounded-full transition-colors text-[#cfc2d5] hover:text-[#deb7ff]"
+          style={{
+            padding: '8px',
+            borderRadius: '50%',
+            background: 'none',
+            border: 'none',
+            color: '#cfc2d5',
+            cursor: 'pointer',
+          }}
         >
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
         </button>
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 px-6 pt-8 pb-32">
-        <div className="mb-8">
-          <h1 
-            className="text-3xl font-bold mb-2 text-[#e3e0f8]"
-            style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
-          >
+      <main style={{
+        position: 'relative',
+        zIndex: 10,
+        padding: '32px 24px 128px',
+      }}>
+        <div style={{ marginBottom: '32px' }}>
+          <h1 style={{
+            fontSize: '32px',
+            fontWeight: 700,
+            marginBottom: '8px',
+            color: '#e3e0f8',
+            fontFamily: 'Plus Jakarta Sans, sans-serif',
+          }}>
             שלום, {user.fullName}! 👋
           </h1>
-          <p className="text-lg text-[#cfc2d5]">
+          <p style={{
+            fontSize: '18px',
+            color: '#cfc2d5',
+          }}>
             ברוך הבא ל-TESFA
           </p>
         </div>
 
         {/* Balance Card */}
-        <div 
-          className="p-6 rounded-2xl mb-6 relative overflow-hidden"
-          style={{ 
-            background: 'linear-gradient(135deg, rgba(123, 47, 190, 0.2) 0%, rgba(97, 7, 186, 0.2) 100%)',
-            border: '1px solid rgba(76, 67, 83, 0.2)',
-          }}
-        >
-          <div className="relative z-10">
-            <p className="text-sm mb-2 text-[#cfc2d5]">
-              היתרה שלך
-            </p>
-            <h2 
-              className="text-4xl font-bold text-[#deb7ff]"
-              style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
-            >
-              2,450.00 TSF
-            </h2>
-          </div>
+        <div style={{
+          padding: '24px',
+          borderRadius: '24px',
+          marginBottom: '24px',
+          position: 'relative',
+          overflow: 'hidden',
+          background: 'linear-gradient(135deg, rgba(123, 47, 190, 0.2) 0%, rgba(97, 7, 186, 0.2) 100%)',
+          border: '1px solid rgba(76, 67, 83, 0.2)',
+        }}>
+          <p style={{
+            fontSize: '14px',
+            marginBottom: '8px',
+            color: '#cfc2d5',
+          }}>
+            היתרה שלך
+          </p>
+          <h2 style={{
+            fontSize: '40px',
+            fontWeight: 700,
+            color: '#deb7ff',
+            fontFamily: 'Plus Jakarta Sans, sans-serif',
+          }}>
+            2,450.00 TSF
+          </h2>
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-2 gap-4">
-          <button className="p-6 rounded-2xl transition-all active:scale-95 bg-[#1e1e2f]">
-            <div className="text-3xl mb-2">📤</div>
-            <p 
-              className="font-bold text-[#e3e0f8]"
-              style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
-            >
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: '16px',
+        }}>
+          <button style={{
+            padding: '24px',
+            borderRadius: '24px',
+            background: '#1e1e2f',
+            border: 'none',
+            cursor: 'pointer',
+            textAlign: 'center',
+          }}>
+            <div style={{ fontSize: '32px', marginBottom: '8px' }}>📤</div>
+            <p style={{
+              fontWeight: 700,
+              color: '#e3e0f8',
+              fontFamily: 'Plus Jakarta Sans, sans-serif',
+            }}>
               שלח
             </p>
           </button>
-          <button className="p-6 rounded-2xl transition-all active:scale-95 bg-[#1e1e2f]">
-            <div className="text-3xl mb-2">📥</div>
-            <p 
-              className="font-bold text-[#e3e0f8]"
-              style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
-            >
+          <button style={{
+            padding: '24px',
+            borderRadius: '24px',
+            background: '#1e1e2f',
+            border: 'none',
+            cursor: 'pointer',
+            textAlign: 'center',
+          }}>
+            <div style={{ fontSize: '32px', marginBottom: '8px' }}>📥</div>
+            <p style={{
+              fontWeight: 700,
+              color: '#e3e0f8',
+              fontFamily: 'Plus Jakarta Sans, sans-serif',
+            }}>
               קבל
             </p>
           </button>

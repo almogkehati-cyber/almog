@@ -19,14 +19,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="he" dir="rtl" className="h-full antialiased">
+    <html lang="he" dir="rtl">
       <head>
         <link 
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Manrope:wght@400;500;600&display=swap" 
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" 
           rel="stylesheet" 
         />
       </head>
-      <body className="min-h-full bg-[#121222] text-[#e3e0f8]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+      <body>
         {children}
       </body>
     </html>
